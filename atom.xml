@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>All1n</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2020-10-12T11:34:06.126Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>LynLynLyn-hh</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>剑指offer第六题：旋转数组的最小数字</title>
+    <link href="http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer6/"/>
+    <id>http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer6/</id>
+    <published>2020-10-12T04:55:34.642Z</published>
+    <updated>2020-10-12T11:34:06.126Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组-3-4-5-1-2-为-1-2-3-4-5-的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。"><a href="#把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组-3-4-5-1-2-为-1-2-3-4-5-的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。" class="headerlink" title="把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组[3,4,5,1,2]为[1,2,3,4,5]的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。"></a>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组[3,4,5,1,2]为[1,2,3,4,5]的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</h3><h2 id="思路-二分法，旋转数组就可以想到，二分出来可能是左边有序，也可能是右边有序，还可能是相等。具体看代码"><a href="#思路-二分法，旋转数组就可以想到，二分出来可能是左边有序，也可能是右边有序，还可能是相等。具体看代码" class="headerlink" title="思路 二分法，旋转数组就可以想到，二分出来可能是左边有序，也可能是右边有序，还可能是相等。具体看代码"></a>思路 二分法，旋转数组就可以想到，二分出来可能是左边有序，也可能是右边有序，还可能是相等。具体看代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minNumberInRotateArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rotateArray)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(rotateArray.size() == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>, r = rotateArray.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = ((r - l) &gt;&gt; <span class="number">1</span>) + l;</span><br><span class="line">            <span class="keyword">if</span> (rotateArray[l] &lt; rotateArray[mid]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (rotateArray[l] &lt; rotateArray[r]) &#123;</span><br><span class="line">                    <span class="keyword">return</span> rotateArray[l]; <span class="comment">//此时可能右边也有序, 1 2 3 4 5 6</span></span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="comment">//只有左边有序</span></span><br><span class="line">                    l = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="comment">// 左边有序</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (rotateArray[mid] &lt; rotateArray[r]) &#123;</span><br><span class="line">                r = mid;</span><br><span class="line">            &#125;<span class="comment">// 右边有序</span></span><br><span class="line">            <span class="comment">// v[l] == v[mid] 或者 v[r] == v[mid] 或者 v[l] == v[mid] == v[r]</span></span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                l++; <span class="comment">//已经没办法了只能推进一下了，假如是最左边的数，那么已经返回结果了，那么一定不是最左边的数，可推进</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rotateArray[l];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;h3 id=&quot;把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组</summary>
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://example.com/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="二分" scheme="http://example.com/tags/%E4%BA%8C%E5%88%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>剑指offer第五题：用两个栈实现队列</title>
+    <link href="http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer5/"/>
+    <id>http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer5/</id>
+    <published>2020-10-12T04:32:41.024Z</published>
+    <updated>2020-10-12T11:34:06.126Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="用两个栈来实现一个队列，完成队列的Push和Pop操作。-队列中的元素为int类型。"><a href="#用两个栈来实现一个队列，完成队列的Push和Pop操作。-队列中的元素为int类型。" class="headerlink" title="用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。"></a>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</h3><h2 id="思路-用一个主栈来存放按顺序的元素，另一个栈当出栈的时候就将主栈的元素全部存入，当元素出栈之后，就将辅助栈的元素全部放回主栈。"><a href="#思路-用一个主栈来存放按顺序的元素，另一个栈当出栈的时候就将主栈的元素全部存入，当元素出栈之后，就将辅助栈的元素全部放回主栈。" class="headerlink" title="思路 用一个主栈来存放按顺序的元素，另一个栈当出栈的时候就将主栈的元素全部存入，当元素出栈之后，就将辅助栈的元素全部放回主栈。"></a>思路 用一个主栈来存放按顺序的元素，另一个栈当出栈的时候就将主栈的元素全部存入，当元素出栈之后，就将辅助栈的元素全部放回主栈。</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> node)</span> </span>&#123;</span><br><span class="line">        stack1.push(node);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (stack1.size() != <span class="number">1</span>) &#123;</span><br><span class="line">            stack2.emplace(stack1.top());</span><br><span class="line">            stack1.pop();</span><br><span class="line">        &#125; <span class="comment">//少做一次pop和emplace操作</span></span><br><span class="line">        <span class="keyword">int</span> n = stack1.top();</span><br><span class="line">        stack1.pop();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) &#123;</span><br><span class="line">            stack1.emplace(stack2.top());</span><br><span class="line">            stack2.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;h3 id=&quot;用两个栈来实现一个队列，完成队列的Push和Pop操作。-队列中的元素为int类型。&quot;&gt;&lt;a href=&quot;#用两个</summary>
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://example.com/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="栈" scheme="http://example.com/tags/%E6%A0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>剑指offer第四题：重建二叉树</title>
+    <link href="http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer4/"/>
+    <id>http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer4/</id>
+    <published>2020-10-12T04:14:09.468Z</published>
+    <updated>2020-10-12T11:34:06.126Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列-1-2-4-7-3-5-6-8-和中序遍历序列-4-7-2-1-5-3-8-6-，则重建二叉树并返回。"><a href="#输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列-1-2-4-7-3-5-6-8-和中序遍历序列-4-7-2-1-5-3-8-6-，则重建二叉树并返回。" class="headerlink" title="输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。"></a>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</h3><h2 id="思路-就根据两个序列建树就行了"><a href="#思路-就根据两个序列建树就行了" class="headerlink" title="思路 就根据两个序列建树就行了"></a>思路 就根据两个序列建树就行了</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL, <span class="keyword">int</span> preR, <span class="keyword">int</span> vinL, <span class="keyword">int</span> vinR, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; pre, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; vin)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (preL &gt; preR || vinL &gt; vinR) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        TreeNode* root = <span class="keyword">new</span> TreeNode(pre[preL]);</span><br><span class="line">        <span class="keyword">int</span> mid = vinL;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = vinL; i &lt;= vinR; i++) &#123; <span class="comment">//注意小于等于，很容易出错</span></span><br><span class="line">            <span class="keyword">if</span> (pre[preL] == vin[i])</span><br><span class="line">                mid = i;</span><br><span class="line">        &#125;</span><br><span class="line">        root-&gt;left = create(preL + <span class="number">1</span>, preL + mid - vinL, vinL, mid - <span class="number">1</span>, pre, vin);</span><br><span class="line">        root-&gt;right = create(preL + mid - vinL + <span class="number">1</span>, preR, mid + <span class="number">1</span>, vinR, pre, vin);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">TreeNode* <span class="title">reConstructBinaryTree</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; pre,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vin)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = pre.size() - <span class="number">1</span>;</span><br><span class="line">        TreeNode* root = create(<span class="number">0</span>, len, <span class="number">0</span>, len, pre, vin);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;h3 id=&quot;输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例</summary>
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://example.com/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="树" scheme="http://example.com/tags/%E6%A0%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>剑指offer第三题：从尾到头打印链表</title>
+    <link href="http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer3/"/>
+    <id>http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer3/</id>
+    <published>2020-10-12T03:00:27.459Z</published>
+    <updated>2020-10-12T11:34:06.126Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="输入一个链表，按链表从尾到头的顺序返回一个ArrayList。"><a href="#输入一个链表，按链表从尾到头的顺序返回一个ArrayList。" class="headerlink" title="输入一个链表，按链表从尾到头的顺序返回一个ArrayList。"></a>输入一个链表，按链表从尾到头的顺序返回一个ArrayList。</h3><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="1-利用栈先入后出"><a href="#1-利用栈先入后出" class="headerlink" title="1.利用栈先入后出"></a>1.利用栈先入后出</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">printListFromTailToHead</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        ListNode* p = head;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="literal">NULL</span>)&#123;</span><br><span class="line">            s.push(p-&gt;val);</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(!s.empty()) &#123;</span><br><span class="line">            v.emplace_back(s.top());</span><br><span class="line">            s.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><h3 id="2-先存入数组再翻转"><a href="#2-先存入数组再翻转" class="headerlink" title="2.先存入数组再翻转"></a>2.先存入数组再翻转</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">printListFromTailToHead</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        ListNode* p = head;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="literal">NULL</span>)&#123;</span><br><span class="line">            v.emplace_back(p-&gt;val);</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        reverse(v.begin(), v.end());</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><h3 id="3-递归"><a href="#3-递归" class="headerlink" title="3.递归"></a>3.递归</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">printListFromTailToHead</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        ListNode* p = head;</span><br><span class="line">        <span class="keyword">if</span> (p != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (p-&gt;next) printListFromTailToHead(p-&gt;next);</span><br><span class="line">            v.emplace_back(p-&gt;val); <span class="comment">//从最后一个开始保存</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;h3 id=&quot;输入一个链表，按链表从尾到头的顺序返回一个ArrayList。&quot;&gt;&lt;a href=&quot;#输入一个链表，按链表从尾到头</summary>
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://example.com/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="链表" scheme="http://example.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>剑指offer第二题：替换空格</title>
+    <link href="http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer2/"/>
+    <id>http://example.com/2020/10/12/%E5%89%91%E6%8C%87offer2/</id>
+    <published>2020-10-12T02:41:43.579Z</published>
+    <updated>2020-10-12T11:33:24.046Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="请实现一个函数，将一个字符串中的每个空格替换成“-20”。例如，当字符串为We-Are-Happy-则经过替换之后的字符串为We-20Are-20Happy。"><a href="#请实现一个函数，将一个字符串中的每个空格替换成“-20”。例如，当字符串为We-Are-Happy-则经过替换之后的字符串为We-20Are-20Happy。" class="headerlink" title="请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。"></a>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</h3><h2 id="思路-一般的思路都是从前往后面换，但是这样会出现一个问题，就是会造成内存覆盖，导致换的时候后面一串的字符会跟着向后移动，所以我们选择从后面往前面更新。但是，从后面往前更新就必须提前扩容，知晓到底需要多少大的空间。"><a href="#思路-一般的思路都是从前往后面换，但是这样会出现一个问题，就是会造成内存覆盖，导致换的时候后面一串的字符会跟着向后移动，所以我们选择从后面往前面更新。但是，从后面往前更新就必须提前扩容，知晓到底需要多少大的空间。" class="headerlink" title="思路 一般的思路都是从前往后面换，但是这样会出现一个问题，就是会造成内存覆盖，导致换的时候后面一串的字符会跟着向后移动，所以我们选择从后面往前面更新。但是，从后面往前更新就必须提前扩容，知晓到底需要多少大的空间。"></a>思路 一般的思路都是从前往后面换，但是这样会出现一个问题，就是会造成内存覆盖，导致换的时候后面一串的字符会跟着向后移动，所以我们选择从后面往前面更新。但是，从后面往前更新就必须提前扩容，知晓到底需要多少大的空间。</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">replaceSpace</span><span class="params">(<span class="keyword">char</span> *str,<span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;<span class="comment">//空格个数</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(str[i] == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">                num++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[i] != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                str[i + num * <span class="number">2</span>] = str[i];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                str[i + num * <span class="number">2</span>] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                str[i + num * <span class="number">2</span> - <span class="number">1</span>] = <span class="string">&#x27;2&#x27;</span>;</span><br><span class="line">                str[i + num * <span class="number">2</span> - <span class="number">2</span>] = <span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">                num--;</span><br><span class="line">            &#125; <span class="comment">//这一步是通过简单的数学计算就可以得出来的</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;h3 id=&quot;请实现一个函数，将一个字符串中的每个空格替换成“-20”。例如，当字符串为We-Are-Happy-则经过替换之后</summary>
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://example.com/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="字符串" scheme="http://example.com/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>剑指offer第一题：二维数组的查找</title>
+    <link href="http://example.com/2020/10/11/%E5%89%91%E6%8C%87offer1/"/>
+    <id>http://example.com/2020/10/11/%E5%89%91%E6%8C%87offer1/</id>
+    <published>2020-10-11T08:32:09.365Z</published>
+    <updated>2020-10-12T11:31:59.884Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。"><a href="#在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。" class="headerlink" title="在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。"></a>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</h3><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="假设有这样一个数组"><a href="#假设有这样一个数组" class="headerlink" title="假设有这样一个数组"></a>假设有这样一个数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>   <span class="number">2</span>   <span class="number">3</span></span><br><span class="line"><span class="number">4</span>   <span class="number">5</span>   <span class="number">6</span></span><br><span class="line"><span class="number">7</span>   <span class="number">8</span>   <span class="number">9</span>  </span><br></pre></td></tr></table></figure><h3 id="要查找5，只能从最后一列的最左边或者第一列的最右边开始查找，因为它们是它们那一列的特殊的一个值，（平均值最小的最大值和平均值最大的最小值），可以判定需不需要换列查找。"><a href="#要查找5，只能从最后一列的最左边或者第一列的最右边开始查找，因为它们是它们那一列的特殊的一个值，（平均值最小的最大值和平均值最大的最小值），可以判定需不需要换列查找。" class="headerlink" title="要查找5，只能从最后一列的最左边或者第一列的最右边开始查找，因为它们是它们那一列的特殊的一个值，（平均值最小的最大值和平均值最大的最小值），可以判定需不需要换列查找。"></a>要查找5，只能从最后一列的最左边或者第一列的最右边开始查找，因为它们是它们那一列的特殊的一个值，（平均值最小的最大值和平均值最大的最小值），可以判定需不需要换列查找。</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从右上角开始查找</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> target, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; <span class="built_in">array</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> row = <span class="built_in">array</span>.size(), col = <span class="built_in">array</span>[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = col - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; row &amp;&amp; j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">array</span>[i][j] &gt; target) &#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">array</span>[i][j] &lt; target) &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//从左下角开始查找</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> target, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; <span class="built_in">array</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> row = <span class="built_in">array</span>.size(), col = <span class="built_in">array</span>[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">int</span> i = row - <span class="number">1</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i &gt;= <span class="number">0</span> &amp;&amp; j &lt; col) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">array</span>[i][j] &gt; target) &#123;</span><br><span class="line">                i--;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">array</span>[i][j] &lt; target) &#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><h3 id="要注意i-j的取值范围，并且对于目标值，只有三个选项，大于小于或者等于，抓住这一点就可以解出来。"><a href="#要注意i-j的取值范围，并且对于目标值，只有三个选项，大于小于或者等于，抓住这一点就可以解出来。" class="headerlink" title="要注意i,j的取值范围，并且对于目标值，只有三个选项，大于小于或者等于，抓住这一点就可以解出来。"></a>要注意i,j的取值范围，并且对于目标值，只有三个选项，大于小于或者等于，抓住这一点就可以解出来。</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;h3 id=&quot;在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序</summary>
+      
+    
+    
+    
+    <category term="剑指offer" scheme="http://example.com/categories/%E5%89%91%E6%8C%87offer/"/>
+    
+    
+    <category term="二分" scheme="http://example.com/tags/%E4%BA%8C%E5%88%86/"/>
+    
+  </entry>
+  
+</feed>
